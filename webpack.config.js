@@ -2,7 +2,13 @@ const { merge } = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa-react-ts");
 const webpack = require("webpack");
 const path = require("path");
-require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
+try {
+  require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
+} catch (error) {
+  if (!error || error.code !== "MODULE_NOT_FOUND") {
+    throw error;
+  }
+}
 
 module.exports = (webpackConfigEnv, argv) => {
   const defaultConfig = singleSpaDefaults({
