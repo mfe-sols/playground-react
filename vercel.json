@@ -1,5 +1,21 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
   "headers": [
+    {
+      "source": "/org-playground.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, no-cache"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        }
+      ]
+    },
     {
       "source": "/assets/(.*)\\\\.[0-9a-fA-F]{8,}\\\\.(.*)",
       "headers": [

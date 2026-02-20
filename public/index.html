@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playground React - Standalone</title>
+  <style>
+    html, body { margin: 0; padding: 0; }
+    #standalone-root { min-height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="standalone-root"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.15.1/dist/system.min.js"></script>
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "@org/playground-react": "/org-playground.js"
+      }
+    }
+  </script>
+  <script>
+    (async function mountStandalone() {
+      const root = document.getElementById("standalone-root") || document.body;
+      const props = {
+        name: "@org/playground-react",
+        domElement: root
+      };
+
+      try {
+        if (!window.System || typeof window.System.import !== "function") {
+          throw new Error("SystemJS runtime is not available");
+        }
+
+        const app = await window.System.import("@org/playground-react");
+        if (typeof app.bootstrap === "function") await app.bootstrap(props);
+        if (typeof app.mount === "function") await app.mount(props);
+      } catch (error) {
+        console.error("[standalone] Failed to mount playground-react", error);
+        root.innerHTML =
+          '<div style="padding:24px;font:14px/1.5 ui-sans-serif,system-ui,sans-serif;color:#b42318;">' +
+          "Failed to render standalone playground module. Check browser console." +
+          "</div>";
+      }
+    })();
+  </script>
+</body>
+</html>

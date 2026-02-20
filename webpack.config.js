@@ -2,6 +2,7 @@ const { merge } = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa-react-ts");
 const webpack = require("webpack");
 const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 try {
   require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 } catch (error) {
@@ -16,7 +17,8 @@ module.exports = (webpackConfigEnv, argv) => {
     projectName: "playground",
     webpackConfigEnv,
     argv,
-    outputSystemJS: false,
+    outputSystemJS: true,
+    disableHtmlGeneration: true,
   });
 
   defaultConfig.resolve = defaultConfig.resolve || {};
@@ -36,24 +38,32 @@ module.exports = (webpackConfigEnv, argv) => {
     "@mfe-sols/i18n",
     "@mfe-sols/ui-kit",
   ]);
-  const customExternals = (context, request, callback) => {
+  const customExternals = ({ context, request }, callback) => {
     if (allowBundle.has(request)) {
       return callback();
     }
     if (typeof baseExternals === "function") {
+      if (baseExternals.length <= 2) {
+        return baseExternals({ context, request }, callback);
+      }
       return baseExternals(context, request, callback);
     }
     if (Array.isArray(baseExternals)) {
       for (const ext of baseExternals) {
         if (typeof ext === "function") {
           let handled = false;
-          ext(context, request, (err, result) => {
+          const onResult = (err, result) => {
             if (err) return callback(err);
             if (result !== undefined) {
               handled = true;
               return callback(null, result);
             }
-          });
+          };
+          if (ext.length <= 2) {
+            ext({ context, request }, onResult);
+          } else {
+            ext(context, request, onResult);
+          }
           if (handled) return;
         } else if (typeof ext === "object" && ext[request]) {
           return callback(null, ext[request]);
@@ -76,6 +86,16 @@ module.exports = (webpackConfigEnv, argv) => {
         "process.env.AUTH_BASE_URL": JSON.stringify(process.env.AUTH_BASE_URL || ""),
         __API_BASE_URL__: JSON.stringify(process.env.API_BASE_URL || ""),
         __AUTH_BASE_URL__: JSON.stringify(process.env.AUTH_BASE_URL || ""),
+      }),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: "public",
+            to: ".",
+            globOptions: { ignore: ["**/.DS_Store"] },
+            noErrorOnMissing: true,
+          },
+        ],
       }),
     ],
     devServer: {
