@@ -1,0 +1,22 @@
+{
+  "name": "catalog-react",
+  "projectType": "application",
+  "root": "apps/catalog-react",
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/catalog-react",
+        "command": "pnpm start"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/catalog-react",
+        "command": "pnpm build"
+      },
+      "outputs": ["{workspaceRoot}/apps/catalog-react/dist"]
+    }
+  }
+}

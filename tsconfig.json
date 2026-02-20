@@ -1,0 +1,20 @@
+{
+  "extends": "ts-config-single-spa",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "declarationDir": "dist",
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "paths": {
+      "@org/ui-kit/design-system": ["../../libs/ui-kit/design-system/src/index.ts"],
+      "@org/auth": ["../../libs/auth/src/index.ts"],
+      "@org/data-access": ["../../libs/data-access/src/index.ts"],
+      "@org/contracts": ["../../libs/contracts/src/index.ts"],
+      "@org/i18n": ["../../libs/i18n/src/index.ts"]
+    }
+  },
+  "files": ["src/org-playground.tsx"],
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test*"]
+}

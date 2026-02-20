@@ -1,0 +1,22 @@
+{
+  "name": "mfe-playground-react",
+  "projectType": "application",
+  "root": "apps/mfe-playground-react",
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/mfe-playground-react",
+        "command": "pnpm start"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/mfe-playground-react",
+        "command": "pnpm build"
+      },
+      "outputs": ["{workspaceRoot}/apps/mfe-playground-react/dist"]
+    }
+  }
+}
