@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createApiClient } from "@org/data-access";
-import { getSharedValue, setSharedValue, subscribeSharedValue } from "@org/contracts";
+import { createApiClient } from "@mfe-sols/data-access";
+import { getSharedValue, setSharedValue, subscribeSharedValue } from "@mfe-sols/contracts";
 import {
   defineDesignSystem,
   ensureTokens,
@@ -26,9 +26,9 @@ import {
   motionPresets,
   motionTransitions,
   sanitizeInlineHtml,
-} from "@org/ui-kit/design-system";
+} from "@mfe-sols/ui-kit";
 import { motion } from "framer-motion";
-import { getStoredLocale, setLocale, t } from "@org/i18n";
+import { getStoredLocale, setLocale, t } from "@mfe-sols/i18n";
 import "./root.component.css";
 
 declare const __API_BASE_URL__: string | undefined;

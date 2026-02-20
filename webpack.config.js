@@ -22,31 +22,13 @@ module.exports = (webpackConfigEnv, argv) => {
     ".ts", ".tsx", ".mjs", ".js", ".jsx", ".wasm", ".json",
   ];
 
-  defaultConfig.resolve.alias = {
-    ...(defaultConfig.resolve.alias || {}),
-    "@org/auth": path.resolve(__dirname, "../../libs/auth/src/index.ts"),
-    "@org/data-access": path.resolve(
-      __dirname,
-      "../../libs/data-access/src/axios-client.ts"
-    ),
-    "@org/contracts": path.resolve(
-      __dirname,
-      "../../libs/contracts/src/index.ts"
-    ),
-    "@org/i18n": path.resolve(__dirname, "../../libs/i18n/src/index.ts"),
-    "@org/ui-kit/design-system": path.resolve(
-      __dirname,
-      "../../libs/ui-kit/design-system/src/index.ts"
-    ),
-  };
-
   const baseExternals = defaultConfig.externals;
   const allowBundle = new Set([
-    "@org/auth",
-    "@org/data-access",
-    "@org/contracts",
-    "@org/i18n",
-    "@org/ui-kit/design-system",
+    "@mfe-sols/auth",
+    "@mfe-sols/data-access",
+    "@mfe-sols/contracts",
+    "@mfe-sols/i18n",
+    "@mfe-sols/ui-kit",
   ]);
   const customExternals = (context, request, callback) => {
     if (allowBundle.has(request)) {

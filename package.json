@@ -54,6 +54,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.3",
+    "@mfe-sols/auth": "^0.1.0",
+    "@mfe-sols/contracts": "^0.1.0",
+    "@mfe-sols/data-access": "^0.1.0",
+    "@mfe-sols/i18n": "^0.1.1",
+    "@mfe-sols/ui-kit": "^0.1.5",
+    "axios": "^1.13.2",
     "framer-motion": "^12.29.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
